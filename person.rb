@@ -8,15 +8,16 @@ class Person < Nameable
 
   def initialize(age, name = 'Unknown', parent_permission = 'true')
     super()
-    @id = Random.rand(1..10.000)
+    @id = Random.rand(1..10_000)
     @name = name
     @age = age
     @parent_permission = parent_permission
     @rentals = []
   end
 
-  def add_rental(date, book)
-    Rental.new(date, book, self)
+  def add_rental(rental)
+    @rental.push(rental)
+    rental.person = self
   end
 
   def can_use_services?
