@@ -19,7 +19,6 @@ class App
       input = gets.chomp
       if input == '7'
         puts 'Bye bye :)'
-        break
       end
 
       option input
