@@ -89,27 +89,35 @@ class App
   end
 
   def create_rental
-    puts 'Please select a book by entering its ID'
-    @books.each_with_index { |book, index| puts "Id: #{index}, Title: #{book.title}, Author: #{book.author}" }
-    selected_book = gets.chomp.to_i
-    puts 'Slesct a person from the following list by entering his/her number'
-    @people.each_with_index { |person, index| puts "Number: #{index}, Name: #{person.name}, Age: #{person.age}" }
-    selected_person = gets.chomp.to_i
-    puts 'Enter rental starting date using this format (yyyy/mm/dd)'
-    date = gets.chomp.to_s
-    rental = Rental.new(date, @books[selected_book], @people[selected_person])
-    @rentals << rental
-    puts 'Rental created successfully'
+    if @books.empty? && @people.empty?
+      puts 'Please add book/person first to be able to reserve .'
+    else
+      puts 'Please select a book by entering its ID'
+      @books.each_with_index { |book, index| puts "Id: #{index}, Title: #{book.title}, Author: #{book.author}" }
+      selected_book = gets.chomp.to_i
+      puts 'Slesct a person from the following list by entering his/her number'
+      @people.each_with_index { |person, index| puts "Number: #{index}, Name: #{person.name}, Age: #{person.age}" }
+      selected_person = gets.chomp.to_i
+      puts 'Enter rental starting date using this format (yyyy/mm/dd)'
+      date = gets.chomp.to_s
+      rental = Rental.new(date, @books[selected_book], @people[selected_person])
+      @rentals << rental
+      puts 'Rental created successfully'
+    end
   end
 
   def list_rentals
-    puts 'Enter person ID from the following: '
-    @people.each { |person| puts "ID: #{person.id}, Name: #{person.name}" }
-    selected_id = gets.chomp.to_i
-    puts 'Rented Books:'
-    @rentals.each do |rental|
-      if rental.person.id == selected_id
-        puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
+    if @rentals.empty?
+      puts 'No data available.'
+    else
+      puts 'Enter person ID from the following: '
+      @people.each { |person| puts "ID: #{person.id}, Name: #{person.name}" }
+      selected_id = gets.chomp.to_i
+      puts 'Rented Books:'
+      @rentals.each do |rental|
+        if rental.person.id == selected_id
+          puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
+        end
       end
     end
   end
